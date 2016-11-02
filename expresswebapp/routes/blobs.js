@@ -145,7 +145,7 @@ router.put("/:id/edit", function(req, res) {
 });
 
 router.delete("/:id/edit", function(req, res) {
-  mongoose.model("Blob").findByID(req.id, function(err, blob) {
+   mongoose.model('Blob').findById(req.id, function (err, blob) {
     if (err) {
       return console.error(err);
     } else {
