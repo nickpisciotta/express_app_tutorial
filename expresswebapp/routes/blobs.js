@@ -89,7 +89,32 @@ router.route("/:id")
       }
     });
   });
-  
+
+router.get('/:id/edit', function(req, res) {
+  mongoose.model('Blob').findById(req.id, function(err, blob) {
+    if (err) {
+      console.log("Error: There was a problem retrieving: " + err);
+    } else {
+      console.log("Retrieving ID: " + blob._id);
+    var blobdob = blob.dob.toISOString();
+    blobdob = blobdob.substring(0, blobdob.indexOf("T"))
+      res.format({
+        html: function() {
+          res.render('blobs/edit', {
+            title: "Blob" + blob._id,
+            "blobdob" : blobdob,
+            "blob" : blob
+          });
+        },
+        json: function() {
+          res.json(blob);
+        }
+      });
+    }
+  });
+});
+
+
 router.param('id', function(req, res, next, id) {
   mongoose.model("Blob").findById(id, function(err, blob) {
     if (err) {
