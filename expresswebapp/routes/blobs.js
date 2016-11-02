@@ -121,7 +121,7 @@ router.put("/:id/edit", function(req, res) {
   var company = req.body.company;
   var isloved = req.body.isloved;
 
-    mongoose.model("Blob").findById(req.id, function(err, dob) {
+    mongoose.model("Blob").findById(req.id, function(err, blob) {
       blob.update({
         name: name,
         badge: badge,
@@ -133,7 +133,7 @@ router.put("/:id/edit", function(req, res) {
         } else {
           res.format({
             html: function() {
-              res.redirect("/blobs" + blob._id)
+              res.redirect("/blobs/" + blob._id)
             },
             json: function() {
               res.json(blob);
