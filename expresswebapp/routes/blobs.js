@@ -77,7 +77,7 @@ router.route("/:id")
         blobdob = blobdob.substring(0, blobdob.indexOf("T"))
         res.format({
           html: function() {
-            res.render('blob/show', {
+            res.render('blobs/show', {
               "blobdob" :blobdob,
               "blob" : blob
             });
