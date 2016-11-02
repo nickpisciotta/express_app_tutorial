@@ -142,7 +142,33 @@ router.put("/:id/edit", function(req, res) {
         }
       })
     });
-}); 
+});
+
+router.delete("/:id/edit", function(req, res) {
+  mongoose.model("Blob").findByID(req.id, function(err, blob) {
+    if (err) {
+      return console.error(err);
+    } else {
+      blob.remove(function(err, blob) {
+        if (err) {
+          console.error(err);
+        } else {
+          console.log("Removing ID: " + blob._id)
+          res.format({
+            html: function() {
+              res.redirect("/blobs");
+            },
+            json: function() {
+              res.json({message: "Deleted",
+                  item: blob
+              });
+            }
+          });
+        }
+      });
+    }
+  });
+});
 
 router.param('id', function(req, res, next, id) {
   mongoose.model("Blob").findById(id, function(err, blob) {
@@ -165,3 +191,5 @@ router.param('id', function(req, res, next, id) {
     }
   });
 });
+
+module.exports = router;

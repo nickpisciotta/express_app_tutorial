@@ -8,8 +8,9 @@ var db = require("./model/db");
 var blob = require("./model/blobs");
 var index = require('./routes/index');
 var users = require('./routes/users');
-
 var app = express();
+var routes = require("./routes/index");
+var blobs = require("./routes/blobs");
 
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
@@ -25,7 +26,8 @@ app.use(express.static(path.join(__dirname, 'public')));
 
 app.use('/', index);
 app.use('/users', users);
-
+app.use('/', routes);
+app.use('/blobs', blobs); 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
   var err = new Error('Not Found');
