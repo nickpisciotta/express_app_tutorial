@@ -114,6 +114,35 @@ router.get('/:id/edit', function(req, res) {
   });
 });
 
+router.put("/:id/edit", function(req, res) {
+  var name = req.body.name;
+  var badge = req.body.badge;
+  var dob = req.body.dob;
+  var company = req.body.company;
+  var isloved = req.body.isloved;
+
+    mongoose.model("Blob").findById(req.id, function(err, dob) {
+      blob.update({
+        name: name,
+        badge: badge,
+        dob: dob,
+        isloved: isloved
+      }, function(err, blobID) {
+        if (err) {
+          res.send("There was a problem updateing the information to the database" + err);
+        } else {
+          res.format({
+            html: function() {
+              res.redirect("/blobs" + blob._id)
+            },
+            json: function() {
+              res.json(blob);
+            }
+          });
+        }
+      })
+    });
+}); 
 
 router.param('id', function(req, res, next, id) {
   mongoose.model("Blob").findById(id, function(err, blob) {
